@@ -1,57 +1,51 @@
 /*	USING FUNCTIONS AND OBJECTS
 	BONUS 2: DISPLAY VOLUNTEERS AVAILABLE ON SAME STREET */
 
-var victims = {
+var victim = {
 	group: 'victim',
-	names: [],
-	phones: [],
-	streets: [],
+	name: [],
+	phone: [],
+	street: [],
 };
-var volunteers = {
+var volunteer = {
 	group: 'volunteer',
-	names: [],
-	phones: [],
-	streets: []
+	name: [],
+	phone: [],
+	street: []
 };
 
 //USER INPUT FOR VICTIMS AND VOLUNTEERS
-
 var addPersonsInfo = function(groupName) {
 	var moreInput = true;
 	while(moreInput) {
-		groupName['names'].push(prompt('What is the ' + groupName.group + '\'s name?'));
-		groupName['phones'].push(prompt('What is the ' + groupName.group + '\'s phone number?'));
-		groupName['streets'].push(prompt('What is the ' + groupName.group + '\'s street?'));
+		for (key in groupName){
+			if (groupName[key] instanceof Array) {
+				groupName[key].push(prompt('What is the ' + groupName.group + '\'s ' + key + '?'));
+			}
+		}
 		moreInput = confirm('Do you want to add another ' + groupName.group + '?');
 	}
 }
-addPersonsInfo(victims);
-addPersonsInfo(volunteers);
 
-//ALERT LIST OF VICTIMS AND VOLUNTEERS
-alert('Number of victims: ' + victims['names'].length +
-	'\nNumber of volunteers: ' + volunteers['names'].length +
-	'\nVictims\' names:\n' + victims['names'].join('\n') +
-	'\nVolunteers\' names:\n' + volunteers['names'].join('\n'))
+addPersonsInfo(victim);
+addPersonsInfo(volunteer);
 
-//SHOW VOLUNTEERS ON SAME STREET AS USER REQUESTED VICTIM
+//ALERT LIST OF victim AND VOLUNTEERS
+alert('Number of victim: ' + victim['name'].length +
+	'\nNumber of volunteer: ' + volunteer['name'].length +
+	'\nVictims\' names:\n' + victim['name'].join('\n') +
+	'\nVolunteers\' names:\n' + volunteer['name'].join('\n'));
+
+//SHOW VOLUNTEER ON SAME STREET AS USER REQUESTED VICTIM
 var personInNeed = prompt('Please enter the name of a person in need.');
-
 var findVolunteers = function(victimsName) {
 	var volunteersNearby = [];
-	var victimsStreet = victims['streets'][victims['names'].indexOf(victimsName)];
-	for (var i=0; i<volunteers['streets'].length; i++) {
-		if (volunteers['streets'][i] === victimsStreet) {
-			volunteersNearby.push(volunteers['names'][i]);
+	var victimsStreet = victim['street'][victim['name'].indexOf(victimsName)];
+	for (var i=0; i<volunteer['street'].length; i++) {
+		if (volunteer['street'][i] === victimsStreet) {
+			volunteersNearby.push(volunteer['name'][i]);
 		}
 	}
 	return volunteersNearby;
 }
-
-alert('Volunteers near ' + personInNeed + ':\n' + findVolunteers(personInNeed).join('\n'));
-
-
-
-
-
-
+alert('Volunteer near ' + personInNeed + ':\n' + findVolunteers(personInNeed).join('\n'));
